@@ -41,21 +41,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print(url.description)
-        print("url.query == \(url.query)")
-        let requestToken = BDBOAuth1Credential(queryString: url.query)
-                let twitterClient = BDBOAuth1SessionManager(baseURL: NSURL(string: "https://api.twitter.com")! as URL!, consumerKey: "G9D1BUl3SZZ2eEVonCCkpcXZV", consumerSecret: "KpORmq0akJL6PPvSOCsSMnG6dJjiPXTWgaEz0JjVy3OOFRldZO")
-        twitterClient?.fetchAccessToken(withPath: "https://api.twitter.com/oauth/access_token", method: "POST", requestToken: requestToken, success:{(accessToken:BDBOAuth1Credential?) -> Void in
-            print("I got the access token!")
-        }, failure: { (error: Error?) in
-            print("error: \(error!.localizedDescription)")
-        })
+
+        let client = TwitterClient.sharedInstance
+        print("Twitter site redirected the user back to the App")
+        client?.handleOpenUrl(url: url as NSURL)
         
+
         return true
     }
-    
-    
 }
-

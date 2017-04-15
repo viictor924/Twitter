@@ -11,13 +11,14 @@ import UIKit
 class User: NSObject {
 
     var name: NSString?
-    var screenname: NSString?
+    var screenName: NSString?
     var profileURL: NSURL?
     var tagline: NSString?
     
     init(dictionary:NSDictionary){
         
-        name = dictionary["screen_name"] as? NSString
+        name = dictionary["name"] as? NSString
+        screenName = dictionary["screen_name"] as? NSString
         let profileURLString = dictionary["profile_image_url_https"] as? NSString
         if let profileURLString = profileURLString{
             profileURL = NSURL(string: profileURLString as String)
