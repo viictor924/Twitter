@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFNetworking
 
 class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
 
@@ -19,16 +20,14 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         
         tableView.dataSource = self
-       // tableView.estimatedRowHeight = 100
-       // tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.delegate = self
+        configureRowHeight()
         
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets:[Tweet]) in
             self.tweets = tweets
             print("printing all the tweets")
             self.tableView.reloadData()
-            for tweet in tweets {
-                print(tweet.text)
-            }
+
         }, failure: { (error: NSError) in
             print(error.localizedDescription)
         })
@@ -39,29 +38,30 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     @IBAction func onLogoutButton(_ sender: Any) {
         
         print("User clicked the logOut button")
         TwitterClient.sharedInstance?.logOut()
         User.currentUser = nil
     }
-    
+    // ============ Table View Methods ========================
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
-        let tweet = tweets[indexPath.row]
-        
-        cell.tweetTextLabel.text = tweet.text as String?
-        cell.timestampLabel.text = tweet.timeStampString as String?
-        cell.retweetCountLabel.text = "\(tweet.retweetCount)"
-        cell.favoritesCountLabel.text = "\(tweet.favoritesCount)"
-        
+        cell.tweet = tweets[indexPath.row]
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweets?.count ?? 0
     }
-
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    // ========================================================
+    
     /*
     // MARK: - Navigation
 
@@ -72,4 +72,9 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
     }
     */
 
+    fileprivate func configureRowHeight() {
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120
+    }
 }
+
