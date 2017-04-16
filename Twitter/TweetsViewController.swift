@@ -142,8 +142,8 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
 
 // =============== Delegate Methods ============================
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let navVC = storyboard.instantiateViewController(withIdentifier: "NewTweetNavigationController") as! UINavigationController
+       // let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let navVC = segue.destination as! UINavigationController
         let newTweetVC = navVC.topViewController as! NewTweetViewController
         newTweetVC.delegate = self
  }
