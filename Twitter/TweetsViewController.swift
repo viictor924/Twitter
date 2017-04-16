@@ -26,6 +26,9 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         
         addRefreshControl()
         requestHomeTimeline()
+        
+        //Customize the Navigation Bar
+        customizeNavigationBar()
     }
     
     func requestHomeTimeline() -> Void{
@@ -44,15 +47,15 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         // Dispose of any resources that can be recreated.
     }
     
-    // ============ IB Action Methods ========================
+    // ============ IB Action Methods =============================
     @IBAction func onLogoutButton(_ sender: Any) {
         
         print("User clicked the logOut button")
         TwitterClient.sharedInstance?.logOut()
         User.currentUser = nil
     }
-    // ========================================================
-    // ============ Table View Methods ========================
+    // =============================================================
+    // ============ Table View Methods =============================
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
@@ -73,7 +76,7 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         tableView.estimatedRowHeight = 120
     }
     
-    // ========================================================
+    // =============================================================
     // ============ Refresh Control Methods ========================
     // Makes a network request to get updated data
     // Updates the tableView with the new data
@@ -93,8 +96,29 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         // add refresh control to table view
         tableView.insertSubview(refreshControl, at: 0)
     }
-    // ========================================================
+    // =============================================================
     
+    func customizeNavigationBar(){
+        
+        self.navigationItem.title = "Home"
+        if let navigationBar = navigationController?.navigationBar {
+            
+            //Change the color of the Bar button fonts
+            navigationBar.tintColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            
+            //Change the color of the Navigation Bar Background
+            navigationBar.backgroundColor = UIColor(red:0.01, green:0.43, blue:0.79, alpha:1.0)
+            
+            //Make the navigationBar be opaque
+           // navigationBar.isTranslucent = false
+            
+            navigationBar.titleTextAttributes = [
+                NSFontAttributeName : UIFont.boldSystemFont(ofSize: 22),
+                NSForegroundColorAttributeName : UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
+            ]
+        }
+        
+    }
     
     /*
      // MARK: - Navigation

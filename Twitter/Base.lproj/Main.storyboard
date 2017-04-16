@@ -108,6 +108,7 @@
                                 <action selector="onLogoutButton:" destination="LX6-cx-G0P" id="ztX-hA-A6z"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="New" id="zil-Ax-d4C"/>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="N7p-al-raB" id="ISC-AE-14R"/>
