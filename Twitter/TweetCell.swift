@@ -10,7 +10,12 @@ import UIKit
 
 class TweetCell: UITableViewCell {
 
+    
     @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
+    @IBOutlet weak var retweetCountLabel: UILabel!
+    @IBOutlet weak var favoritesCountLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

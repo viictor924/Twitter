@@ -11,6 +11,7 @@ import BDBOAuth1Manager
 
 class TwitterClient: BDBOAuth1SessionManager {
     
+    
     static let sharedInstance = TwitterClient(baseURL: URL(string: "https://api.twitter.com"), consumerKey: "G9D1BUl3SZZ2eEVonCCkpcXZV", consumerSecret: "KpORmq0akJL6PPvSOCsSMnG6dJjiPXTWgaEz0JjVy3OOFRldZO")
     
     var loginSuccess: (() -> ())?
@@ -48,15 +49,29 @@ class TwitterClient: BDBOAuth1SessionManager {
         
     }
     
+    func logOut(){
+        deauthorize()
+        User.currentUser = nil
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
+    }
+    
     func handleOpenUrl(url: NSURL){
         let requestToken = BDBOAuth1Credential(queryString: url.query!)
         fetchAccessToken(withPath: "/oauth/access_token", method: "POST", requestToken: requestToken, success: { (credential: BDBOAuth1Credential?) in
             print("I got an access token!")
-            self.loginSuccess?()
             
+            self.currentAccount(success: { (user: User) in
+                User.currentUser = user
+                self.loginSuccess?()
+            }, failure: { (error:NSError) in
+                self.loginFailure?(error )
+            })
+            
+        
         }, failure: { (error: Error?) in
            // self.loginFailure
             print("error: \(error)")
+            self.loginFailure?(error as! NSError)
         })
     }
     
@@ -80,12 +95,14 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func currentAccount(){
+    func currentAccount(success: @escaping (User) -> (), failure: @escaping (NSError) ->()){
         // Access users account info
         get("https://api.twitter.com/1.1/account/verify_credentials.json", parameters: nil, progress: { (nil) in
             print("Progress...")
         }, success: { (task: URLSessionDataTask, response: Any?) in
             let user = User(dictionary: response as! NSDictionary)
+            
+            success(user)
             
             // print("account: \(response)")
             print("Name: \(user.name!)")
@@ -95,6 +112,7 @@ class TwitterClient: BDBOAuth1SessionManager {
             
         }, failure: { (task: URLSessionDataTask?, error: Error?) in
             print("Error occured retrieving user Twitter acount information, \(error)")
+            failure(error as! NSError)
         })
     }
 }

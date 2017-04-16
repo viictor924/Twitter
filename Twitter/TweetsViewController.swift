@@ -19,6 +19,8 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         
         tableView.dataSource = self
+       // tableView.estimatedRowHeight = 100
+       // tableView.rowHeight = UITableViewAutomaticDimension
         
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets:[Tweet]) in
             self.tweets = tweets
@@ -37,12 +39,22 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func onLogoutButton(_ sender: Any) {
+        
+        print("User clicked the logOut button")
+        TwitterClient.sharedInstance?.logOut()
+        User.currentUser = nil
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         let tweet = tweets[indexPath.row]
         
         cell.tweetTextLabel.text = tweet.text as String?
+        cell.timestampLabel.text = tweet.timeStampString as String?
+        cell.retweetCountLabel.text = "\(tweet.retweetCount)"
+        cell.favoritesCountLabel.text = "\(tweet.favoritesCount)"
+        
         return cell
     }
     
