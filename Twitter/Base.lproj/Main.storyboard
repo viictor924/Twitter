@@ -59,9 +59,6 @@
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I have seen the future of newspapers: http://t.co/UfmWt2OTCP" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bb-2v-lIs">
                                                     <rect key="frame" x="65" y="29" width="300" height="36"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="300" id="WIj-SR-5Yy"/>
-                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -80,6 +77,7 @@
                                                 <constraint firstItem="ueW-oU-eT6" firstAttribute="top" secondItem="utP-Z2-zPG" secondAttribute="top" id="Zq0-fp-Cai"/>
                                                 <constraint firstItem="7M9-gh-XEx" firstAttribute="baseline" secondItem="B4f-4W-etG" secondAttribute="baseline" id="caa-uj-lVa"/>
                                                 <constraint firstItem="B4f-4W-etG" firstAttribute="leading" secondItem="ueW-oU-eT6" secondAttribute="trailing" constant="10" id="fjy-lR-x5A"/>
+                                                <constraint firstAttribute="trailing" secondItem="1Bb-2v-lIs" secondAttribute="trailing" constant="10" id="iaq-To-sTN"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1Bb-2v-lIs" secondAttribute="bottom" constant="10" id="otw-X3-mdr"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -108,7 +106,7 @@
                                 <action selector="onLogoutButton:" destination="LX6-cx-G0P" id="ztX-hA-A6z"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="New" id="zil-Ax-d4C">
+                        <barButtonItem key="rightBarButtonItem" title="Compose" id="zil-Ax-d4C">
                             <connections>
                                 <segue destination="6Lu-zT-l3l" kind="presentation" id="hfe-Gy-JAO"/>
                             </connections>
@@ -147,7 +145,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="Tweet away" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ha8-Bc-kF7">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ha8-Bc-kF7">
                                 <rect key="frame" x="10" y="134" width="355" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="EsD-At-iT3"/>

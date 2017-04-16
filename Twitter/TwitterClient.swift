@@ -9,10 +9,27 @@
 import UIKit
 import BDBOAuth1Manager
 
+//App keys
+let twitterBaseUrl = "https://api.twitter.com"
+let twitterConsumerKey = "G9D1BUl3SZZ2eEVonCCkpcXZV"
+let twitterConsumerSecret = "KpORmq0akJL6PPvSOCsSMnG6dJjiPXTWgaEz0JjVy3OOFRldZO"
+
+//Url paths
+let twitterRequestTokenPath = "oauth/request_token"
+let twitterAuthUrl = "https://api.twitter.com/oauth/authorize"
+let twitterAccessTokenPath = "/oauth/access_token"
+let twitterHomeTimelinePath = "1.1/statuses/home_timeline.json"
+let twitterVerifyCredentials = "1.1/account/verify_credentials.json"
+let twitterOAuthCallback = "twitterdemo://oauth"
+
+// Post tweet
+let twitterPostTweetUrl = "1.1/statuses/update.json"
+
+
 class TwitterClient: BDBOAuth1SessionManager {
     
     
-    static let sharedInstance = TwitterClient(baseURL: URL(string: "https://api.twitter.com"), consumerKey: "G9D1BUl3SZZ2eEVonCCkpcXZV", consumerSecret: "KpORmq0akJL6PPvSOCsSMnG6dJjiPXTWgaEz0JjVy3OOFRldZO")
+    static let sharedInstance = TwitterClient(baseURL: URL(string: twitterBaseUrl), consumerKey: twitterConsumerKey, consumerSecret: twitterConsumerSecret)
     
     var loginSuccess: (() -> ())?
     var loginFailure: ((NSError) -> ())?
@@ -23,13 +40,13 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         TwitterClient.sharedInstance?.deauthorize()
         // in this method, the callback is the callback 'twitterdemo:' a type of web-like application protocol?
-        TwitterClient.sharedInstance?.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: URL(string: "twitterdemo://oauth"), scope: nil, success: { (requestToken: BDBOAuth1Credential?) in
+        fetchRequestToken(withPath: twitterRequestTokenPath, method: "GET", callbackURL: URL(string: twitterOAuthCallback), scope: nil, success: { (requestToken: BDBOAuth1Credential?) in
             //      print("I got a success token")
             
             // After getting token get authorization to request user to grant access to their account
             if requestToken != nil {
                 if let token = requestToken!.token {
-                    let url = URL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\(token)")
+                    let url = URL(string: twitterAuthUrl + "?oauth_token=\(token)")
                     print("I got a  request token: \(token)")
                     
                     // Go to Twitter authorization url
@@ -57,7 +74,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func handleOpenUrl(url: NSURL){
         let requestToken = BDBOAuth1Credential(queryString: url.query!)
-        fetchAccessToken(withPath: "/oauth/access_token", method: "POST", requestToken: requestToken, success: { (credential: BDBOAuth1Credential?) in
+        fetchAccessToken(withPath: twitterAccessTokenPath, method: "POST", requestToken: requestToken, success: { (credential: BDBOAuth1Credential?) in
             print("I got an access token!")
             
             self.currentAccount(success: { (user: User) in
@@ -75,11 +92,25 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func postTweet(tweetMessage: String) -> Void{
+        let param = ["status": tweetMessage]
+        
+        post(twitterPostTweetUrl, parameters: param , progress: { (nil) in
+            print("PostTweet: Progress...")
+        }, success: { (task:URLSessionDataTask, response:Any?) in
+            print("Successfully posted a new tweet: '\(tweetMessage)'")
+           
+        }) { (task:URLSessionDataTask?, error:Error) in
+            print(error.localizedDescription)
+        }
+        
+    }
+    
     func homeTimeline(success: @escaping ([Tweet]) -> (), failure: @escaping (NSError) -> ()){
         
         // User tweets
-        get("1.1/statuses/home_timeline.json", parameters: nil, progress: { (nil) in
-            print("Progress...")
+        get(twitterHomeTimelinePath, parameters: nil, progress: { (nil) in
+            print("Requesting tweets: Progress...")
         }, success: { (task: URLSessionDataTask, response: Any?) in
             print("requested tweets from Twitter server")
             let dictionaries = response as! [NSDictionary]
@@ -97,8 +128,8 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func currentAccount(success: @escaping (User) -> (), failure: @escaping (NSError) ->()){
         // Access users account info
-        get("https://api.twitter.com/1.1/account/verify_credentials.json", parameters: nil, progress: { (nil) in
-            print("Progress...")
+        get(twitterVerifyCredentials, parameters: nil, progress: { (nil) in
+            print("Requesting user info: Progress...")
         }, success: { (task: URLSessionDataTask, response: Any?) in
             let user = User(dictionary: response as! NSDictionary)
             

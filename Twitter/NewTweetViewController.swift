@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFNetworking
 
 class NewTweetViewController: UIViewController {
 
@@ -42,7 +43,11 @@ class NewTweetViewController: UIViewController {
 
     
     @IBAction func onTweetButton(_ sender: Any) {
-        print("Submitting tweet: \(newTweetTextField.text)")
+        let message = newTweetTextField.text ?? ""
+        
+        print("Submitting tweet: \(message)")
+        TwitterClient.sharedInstance?.postTweet(tweetMessage: message)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onCancelButton(_ sender: Any) {
