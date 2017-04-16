@@ -98,6 +98,7 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
     }
     // =============================================================
     
+    // =============== Cosmetic Methods ============================
     func customizeNavigationBar(){
         
         self.navigationItem.title = "Home"
@@ -117,8 +118,10 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
                 NSForegroundColorAttributeName : UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
             ]
         }
-        
     }
+    // =============================================================
+    
+    
     
     /*
      // MARK: - Navigation
