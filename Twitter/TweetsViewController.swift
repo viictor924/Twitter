@@ -9,7 +9,7 @@
 import UIKit
 import AFNetworking
 
-class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
+class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDataSource{
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -22,8 +22,14 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         
         tableView.dataSource = self
         tableView.delegate = self
+    
         configureRowHeight()
-        
+       /*
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let navVC = storyboard.instantiateViewController(withIdentifier: "NewTweetViewController") as! UINavigationController
+        let newTweetVC = navVC.topViewController as! NewTweetViewController
+        newTweetVC.delegate = self
+            */
         addRefreshControl()
         requestHomeTimeline()
         
@@ -111,7 +117,7 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
             navigationBar.backgroundColor = UIColor(red:0.01, green:0.43, blue:0.79, alpha:1.0)
             
             //Make the navigationBar be opaque
-           // navigationBar.isTranslucent = false
+            // navigationBar.isTranslucent = false
             
             navigationBar.titleTextAttributes = [
                 NSFontAttributeName : UIFont.boldSystemFont(ofSize: 22),
@@ -120,7 +126,6 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         }
     }
     // =============================================================
-    
     
     
     /*
@@ -133,5 +138,21 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
      }
      */
     
-}
 
+
+// =============== Delegate Methods ============================
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let navVC = storyboard.instantiateViewController(withIdentifier: "NewTweetNavigationController") as! UINavigationController
+        let newTweetVC = navVC.topViewController as! NewTweetViewController
+        newTweetVC.delegate = self
+ }
+}
+extension TweetsViewController: newTweetControllerDelegate {
+    func newTweetComposed(newTweetViewController: NewTweetViewController, didPostTweet: Tweet) {
+        print("newTweetComposed delegate called on TweetsViewController")
+        tweets.insert(didPostTweet, at: 0)
+        tableView.reloadData()
+    }
+}
+// =============================================================

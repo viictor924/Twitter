@@ -61,7 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Twitter site redirected the user back to the App")
         client?.handleOpenUrl(url: url as NSURL)
         
-
         return true
     }
 }
