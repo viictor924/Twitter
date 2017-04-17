@@ -20,6 +20,7 @@ class Tweet: NSObject {
     var screenName: String?
     var profilePictureUrl: URL?
     var fullName: String?
+    var tweetID: String?
     
     var formattedDate: String {
         if let timeStamp = timeStamp {
@@ -34,11 +35,25 @@ class Tweet: NSObject {
         return ""
     }
     
+    var detailTimeStamp: String {
+        if let timeStamp = timeStamp {
+            let formatter = DateFormatter()
+            
+            // Example: "04/17/2017, 08:13 PM"
+            formatter.dateFormat = "MM/dd/yyyy, hh:mm a"
+            return formatter.string(from: timeStamp)
+        }
+        return ""
+    }
+    
     init(dictionary: NSDictionary){
         user = User(dictionary: dictionary["user"] as! NSDictionary)
         
         // Example: text = "2nd tweet";
         text = dictionary["text"] as? String
+        
+        // Example: id_str = "853699324584247296"
+        tweetID = dictionary["id_str"] as? String
         
         // Example: "Tue Aug 28 21:08:15 +0000 2012"
         let timeStampStr = dictionary["created_at"] as? String
@@ -47,31 +62,13 @@ class Tweet: NSObject {
             formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
             timeStamp = formatter.date(from: timeStampStr)
         }
-        
-        // Example: "retweet_count" = 0;
+        print(dictionary)
+        // Example: "retweet_count" = 6353;
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         
-        // Example: "favourites_count" = 0;
-        favoritesCount = (dictionary["favourites_count"] as? Int) ?? 0
-       
-        
-        
-        /*
-        let userDictionary = dictionary["user"] as? NSDictionary
-        
-        if let userDictionary = userDictionary{
-            //name = "Victor Rodriguez";
-            fullName = userDictionary["name"] as? String
-            
-            //"screen_name" = viictor924;
-            screenName = userDictionary["screen_name"] as? String
-            
-            //"profile_image_url_https" = "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png";
-            let imageUrlString = userDictionary["profile_image_url_https"] as? String
-            if let imageUrlString = imageUrlString {
-                profilePictureUrl = URL(string: imageUrlString)
-            }
-        } */
+        // Example: "favorite_count" = 278;
+        favoritesCount = (dictionary["favorite_count"] as? Int) ?? 0
+
     }
 
     class func tweetsWithArray(dictionaries: [NSDictionary]) -> [Tweet]{

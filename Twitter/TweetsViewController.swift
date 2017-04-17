@@ -140,19 +140,35 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
     
 
 
-// =============== Delegate Methods ============================
+    // =============== Prepare for Segue ============================
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-       // let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let navVC = segue.destination as! UINavigationController
-        let newTweetVC = navVC.topViewController as! NewTweetViewController
-        newTweetVC.delegate = self
- }
+        
+        if segue.identifier == "newTweetSegue" {
+            let navVC = segue.destination as! UINavigationController
+            let newTweetVC = navVC.topViewController as! NewTweetViewController
+            newTweetVC.delegate = self
+        }
+            
+        else if segue.identifier == "tweetDetailSegue"{
+            let tweetCell = sender as! TweetCell
+            let tweetIndexPath = tableView.indexPath(for: tweetCell)
+            let tweet = tweets[(tweetIndexPath?.row)!]
+            print("I'm inside the tweetDetailSegue")
+            
+            //let navVC = segue.destination as! UINavigationController
+            //let tweetDetailVC = navVC.topViewController as! TweetDetailViewController
+            let tweetDetailVC = segue.destination as! TweetDetailViewController
+            tweetDetailVC.tweet = tweet
+        }
+    }
+    // =============================================================
 }
-extension TweetsViewController: newTweetControllerDelegate {
+    // =============== Delegate Methods ============================
+    extension TweetsViewController: newTweetControllerDelegate {
     func newTweetComposed(newTweetViewController: NewTweetViewController, didPostTweet: Tweet) {
         print("newTweetComposed delegate called on TweetsViewController")
         tweets.insert(didPostTweet, at: 0)
         tableView.reloadData()
     }
 }
-// =============================================================
+    // =============================================================

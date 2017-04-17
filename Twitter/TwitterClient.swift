@@ -22,8 +22,14 @@ let twitterHomeTimelinePath = "1.1/statuses/home_timeline.json"
 let twitterVerifyCredentials = "1.1/account/verify_credentials.json"
 let twitterOAuthCallback = "twitterdemo://oauth"
 
+// Post favorite
+let twitterPostFavoritePath = "1.1/favorites/create.json"
+
+// Post retweet
+let twitterPostRetweetPath = "1.1/statuses/retweet/" //:id.json
+
 // Post tweet
-let twitterPostTweetUrl = "1.1/statuses/update.json"
+let twitterPostTweetPath = "1.1/statuses/update.json"
 
 
 class TwitterClient: BDBOAuth1SessionManager {
@@ -95,7 +101,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     func postTweet(tweetMessage: String, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> () ){
         let param = ["status": tweetMessage]
         
-        post(twitterPostTweetUrl, parameters: param , progress: { (nil) in
+        post(twitterPostTweetPath, parameters: param , progress: { (nil) in
             print("PostTweet: Progress...")
             
         }, success: { (task:URLSessionDataTask, response:Any?) in
@@ -104,6 +110,52 @@ class TwitterClient: BDBOAuth1SessionManager {
         }) { (task:URLSessionDataTask?, error:Error) in
             print(error.localizedDescription)
              failure(error)
+        }
+    }
+    
+    func postFavorite(tweetID: String, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> () ){
+        let param = ["id": tweetID]
+        
+        post(twitterPostFavoritePath, parameters: param, progress: { (nil) in
+            print("PostFavorite: Progress...")
+        }, success: { (task:URLSessionDataTask, response:Any?) in
+            print("Successfully favorited a tweet: '\(tweetID)'")
+            success(Tweet.init(dictionary: response as! NSDictionary))
+        }) { (task:URLSessionDataTask?, error:Error) in
+            print(error.localizedDescription)
+            failure(error)
+        }
+    }
+    
+    func postRetweet(tweetID: String, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> () ){
+        let retweetFullUrl = twitterPostRetweetPath + tweetID + ".json"
+        
+        get(retweetFullUrl, parameters: nil, progress: { (nil) in
+            print("PostRetweet: Progress...")
+        }, success: { (task:URLSessionDataTask, response:Any?) in
+            print("Successfully retweeted a tweet: '\(tweetID)'")
+            success(Tweet.init(dictionary: response as! NSDictionary))
+        }) { (task:URLSessionDataTask?, error:Error) in
+            print(error.localizedDescription)
+            failure(error)
+        }
+    }
+    
+    func postReply(tweetMessage:String, tweetInResponseTo:Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> () ){
+        let inReplyToID = tweetInResponseTo.tweetID
+        let tweetReply = (tweetInResponseTo.user?.screenName)! + ", " + tweetMessage
+        let param = ["status": tweetReply, "in_reply_to_status_id": inReplyToID]
+        
+        post(twitterPostTweetPath, parameters: param , progress: { (nil) in
+            print("PostTweet: Progress...")
+            
+        }, success: { (task:URLSessionDataTask, response:Any?) in
+            print("Successfully tweeted message: '\(tweetMessage)'")
+            print("As a reply for tweet id: '\(inReplyToID)'")
+            success(Tweet.init(dictionary: response as! NSDictionary))
+        }) { (task:URLSessionDataTask?, error:Error) in
+            print(error.localizedDescription)
+            failure(error)
         }
         
     }

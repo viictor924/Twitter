@@ -28,7 +28,7 @@ class TweetCell: UITableViewCell {
                 timestampLabel.text = tweet.formattedDate
                 
                 //data from user model
-                screenNameLabel.text = "@\(user.screenName!)"
+                screenNameLabel.text = user.screenName
                 fullNameLabel.text = user.name
                 profilePictureImageView.setImageWith(user.profileURL!)
             }

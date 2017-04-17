@@ -28,6 +28,7 @@ class NewTweetViewController: UIViewController {
         // input user details into labels and imageViews
         updateUserDetails()
         
+        //Make text field the first responder so keyboard appears
         newTweetTextField.becomeFirstResponder()
         
         // Do any additional setup after loading the view.

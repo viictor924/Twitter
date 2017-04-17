@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13359F161EA44E15009045B6 /* TweetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13359F151EA44E15009045B6 /* TweetDetailViewController.swift */; };
+		13359F181EA47DFE009045B6 /* TweetReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13359F171EA47DFE009045B6 /* TweetReplyViewController.swift */; };
 		13A7709C1EA1A6D100542C3D /* TweetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A7709B1EA1A6D100542C3D /* TweetsViewController.swift */; };
 		13A7709F1EA1B48300542C3D /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A7709E1EA1B48300542C3D /* TweetCell.swift */; };
 		13A770A11EA3389700542C3D /* NewTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A770A01EA3389700542C3D /* NewTweetViewController.swift */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13359F151EA44E15009045B6 /* TweetDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetDetailViewController.swift; sourceTree = "<group>"; };
+		13359F171EA47DFE009045B6 /* TweetReplyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetReplyViewController.swift; sourceTree = "<group>"; };
 		13A7709B1EA1A6D100542C3D /* TweetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetsViewController.swift; sourceTree = "<group>"; };
 		13A7709E1EA1B48300542C3D /* TweetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
 		13A770A01EA3389700542C3D /* NewTweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTweetViewController.swift; sourceTree = "<group>"; };
@@ -116,7 +120,9 @@
 			children = (
 				13B251B21E9B6CC700416689 /* LoginViewController.swift */,
 				13A770A01EA3389700542C3D /* NewTweetViewController.swift */,
+				13359F151EA44E15009045B6 /* TweetDetailViewController.swift */,
 				13A7709B1EA1A6D100542C3D /* TweetsViewController.swift */,
+				13359F171EA47DFE009045B6 /* TweetReplyViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -263,7 +269,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				13E932A81EA0A4F300AC5152 /* TwitterClient.swift in Sources */,
+				13359F181EA47DFE009045B6 /* TweetReplyViewController.swift in Sources */,
 				13A770A11EA3389700542C3D /* NewTweetViewController.swift in Sources */,
+				13359F161EA44E15009045B6 /* TweetDetailViewController.swift in Sources */,
 				13A7709F1EA1B48300542C3D /* TweetCell.swift in Sources */,
 				13B251B31E9B6CC700416689 /* LoginViewController.swift in Sources */,
 				13A7709C1EA1A6D100542C3D /* TweetsViewController.swift in Sources */,
