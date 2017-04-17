@@ -143,7 +143,8 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func postReply(tweetMessage:String, tweetInResponseTo:Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> () ){
         let inReplyToID = tweetInResponseTo.tweetID
-        let tweetReply = (tweetInResponseTo.user?.screenName)! + ", " + tweetMessage
+        let inReplyToScreenName = (tweetInResponseTo.user?.screenName)!
+        let tweetReply = inReplyToScreenName + " " + tweetMessage
         let param = ["status": tweetReply, "in_reply_to_status_id": inReplyToID]
         
         post(twitterPostTweetPath, parameters: param , progress: { (nil) in
