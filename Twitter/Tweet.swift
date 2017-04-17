@@ -62,7 +62,7 @@ class Tweet: NSObject {
             formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
             timeStamp = formatter.date(from: timeStampStr)
         }
-        print(dictionary)
+        
         // Example: "retweet_count" = 6353;
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         

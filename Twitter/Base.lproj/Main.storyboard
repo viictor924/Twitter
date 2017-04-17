@@ -146,7 +146,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="Testing newTweetControllerDelegate" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ha8-Bc-kF7">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ha8-Bc-kF7">
                                 <rect key="frame" x="10" y="134" width="355" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="EsD-At-iT3"/>
@@ -245,9 +245,10 @@
             <objects>
                 <navigationController storyboardIdentifier="TweetsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="b82-K6-yPK" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hvz-wK-VxR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Hvz-wK-VxR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.46221858263015747" green="0.84116172790527344" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -263,9 +264,10 @@
             <objects>
                 <navigationController storyboardIdentifier="NewTweetNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="6Lu-zT-l3l" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZNB-tf-fCx">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ZNB-tf-fCx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.46221858259999998" green="0.84116172789999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -395,7 +397,7 @@
                                 <state key="normal" title="Button" image="reply2"/>
                                 <connections>
                                     <action selector="onReplyButton:" destination="5T4-7U-voe" eventType="touchUpInside" id="0b0-og-vgM"/>
-                                    <segue destination="iUd-e9-iLJ" kind="presentation" id="VBd-Rg-6bF"/>
+                                    <segue destination="iUd-e9-iLJ" kind="presentation" identifier="tweetReplySegue" id="VBd-Rg-6bF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -452,10 +454,10 @@
             </objects>
             <point key="canvasLocation" x="2869.5999999999999" y="955.77211394302856"/>
         </scene>
-        <!--View Controller-->
+        <!--Tweet Reply View Controller-->
         <scene sceneID="E0c-Ly-MDS">
             <objects>
-                <viewController id="s1a-gS-ih3" sceneMemberID="viewController">
+                <viewController id="s1a-gS-ih3" customClass="TweetReplyViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5ul-it-HIv"/>
                         <viewControllerLayoutGuide type="bottom" id="Ixn-y7-ijU"/>
@@ -463,9 +465,69 @@
                     <view key="view" contentMode="scaleToFill" id="fKw-vC-Ekk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dfm-hd-x2t">
+                                <rect key="frame" x="10" y="74" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="e07-Q3-tAv"/>
+                                    <constraint firstAttribute="height" constant="50" id="tVu-iq-TcB"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mmq-jK-Es8">
+                                <rect key="frame" x="70" y="74" width="77" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FwZ-Sk-aAR">
+                                <rect key="frame" x="10" y="134" width="355" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="Hdy-hB-pSH"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="screenName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vDt-xD-zv0">
+                                <rect key="frame" x="70" y="97" width="82" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dfm-hd-x2t" firstAttribute="leading" secondItem="fKw-vC-Ekk" secondAttribute="leading" constant="10" id="3V2-Ue-bS3"/>
+                            <constraint firstItem="mmq-jK-Es8" firstAttribute="top" secondItem="dfm-hd-x2t" secondAttribute="top" id="J6A-jb-KLa"/>
+                            <constraint firstItem="dfm-hd-x2t" firstAttribute="top" secondItem="5ul-it-HIv" secondAttribute="bottom" constant="10" id="LD9-Fa-77X"/>
+                            <constraint firstItem="vDt-xD-zv0" firstAttribute="leading" secondItem="mmq-jK-Es8" secondAttribute="leading" id="dZ4-2B-zv2"/>
+                            <constraint firstAttribute="trailing" secondItem="FwZ-Sk-aAR" secondAttribute="trailing" constant="10" id="fBR-bX-eGF"/>
+                            <constraint firstItem="FwZ-Sk-aAR" firstAttribute="top" secondItem="dfm-hd-x2t" secondAttribute="bottom" constant="10" id="htL-PD-gJw"/>
+                            <constraint firstItem="FwZ-Sk-aAR" firstAttribute="leading" secondItem="fKw-vC-Ekk" secondAttribute="leading" constant="10" id="ocl-9k-s3S"/>
+                            <constraint firstItem="mmq-jK-Es8" firstAttribute="leading" secondItem="dfm-hd-x2t" secondAttribute="trailing" constant="10" id="pwW-tE-59f"/>
+                            <constraint firstItem="vDt-xD-zv0" firstAttribute="top" secondItem="mmq-jK-Es8" secondAttribute="bottom" constant="2" id="vf4-cR-chw"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="xdV-ws-4SZ"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="xdV-ws-4SZ">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="eGB-OV-9K1">
+                            <connections>
+                                <action selector="onCancelButton:" destination="s1a-gS-ih3" id="r90-Vh-Sb0"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Reply" id="pmw-o2-pXo">
+                            <connections>
+                                <action selector="onReplyButton:" destination="s1a-gS-ih3" id="ApZ-UI-2TV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="fullNameLabel" destination="mmq-jK-Es8" id="eoZ-VC-Web"/>
+                        <outlet property="newTweetTextField" destination="FwZ-Sk-aAR" id="AIK-g2-Yz7"/>
+                        <outlet property="profilePictureImageView" destination="dfm-hd-x2t" id="vIZ-UT-uNb"/>
+                        <outlet property="screenNameLabel" destination="vDt-xD-zv0" id="SaW-o8-lhT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eqy-4x-1Ga" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -476,9 +538,10 @@
             <objects>
                 <navigationController storyboardIdentifier="tweetDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="3Zv-58-dnT" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yk2-YD-Arb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yk2-YD-Arb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.46221858259999998" green="0.84116172789999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -487,16 +550,17 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pOR-fv-jDz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2263" y="1872"/>
+            <point key="canvasLocation" x="1988" y="956"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OOB-LR-grm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iUd-e9-iLJ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TweetReplyNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="iUd-e9-iLJ" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TMJ-2S-lTo">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TMJ-2S-lTo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

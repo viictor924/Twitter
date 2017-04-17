@@ -38,7 +38,7 @@ class NewTweetViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    // =============== Update IB Outlets ===========================
     func updateUserDetails() -> Void {
         if let currentUser = User.currentUser {
             fullNameLabel.text = currentUser.name
@@ -46,8 +46,9 @@ class NewTweetViewController: UIViewController {
             profilePictureImageView.setImageWith(currentUser.profileURL!)
         }
     }
+    // =============================================================
     
-    
+    // =============== IB Action Methods ===========================
     @IBAction func onTweetButton(_ sender: Any) {
         let message = newTweetTextField.text ?? ""
         
@@ -58,14 +59,12 @@ class NewTweetViewController: UIViewController {
         }, failure: { (error: Error) in
             print(error.localizedDescription)
         })
-        
     }
-    
     
     @IBAction func onCancelButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
+    // =============================================================
     
     /*
      // MARK: - Navigation
