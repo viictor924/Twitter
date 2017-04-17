@@ -11,8 +11,10 @@ import AFNetworking
 
 class TweetCell: UITableViewCell {
 
+    @IBOutlet weak var replyCountLabel: UILabel!
+    @IBOutlet weak var favoriteCountLabel: UILabel!
     @IBOutlet weak var retweetCountLabel: UILabel!
-    @IBOutlet weak var favoritesCountLabel: UILabel!
+    
     
     @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
@@ -26,6 +28,9 @@ class TweetCell: UITableViewCell {
                 //data from tweet model
                 tweetTextLabel.text = tweet.text as String?
                 timestampLabel.text = tweet.formattedDate
+                replyCountLabel.text = "\(tweet.replyCount)"
+                retweetCountLabel.text = "\(tweet.retweetCount)"
+                favoriteCountLabel.text = "\(tweet.favoritesCount)"
                 
                 //data from user model
                 screenNameLabel.text = user.screenName

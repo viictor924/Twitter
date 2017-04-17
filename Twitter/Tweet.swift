@@ -14,6 +14,7 @@ class Tweet: NSObject {
     var timeStamp: Date?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
+    var replyCount: Int = 0
     var user: User?
     
     var timeStampString: String?
@@ -62,6 +63,11 @@ class Tweet: NSObject {
             formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
             timeStamp = formatter.date(from: timeStampStr)
         }
+        
+        print(dictionary)
+        
+        // Example: "reply_count" = 3152;
+        replyCount = (dictionary["reply_count"] as? Int) ?? 0
         
         // Example: "retweet_count" = 6353;
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0

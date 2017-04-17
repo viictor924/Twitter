@@ -55,6 +55,7 @@ class NewTweetViewController: UIViewController {
         TwitterClient.sharedInstance?.postTweet(tweetMessage: message, success: { (tweet: Tweet) in
             print("about to call newTweetControllerDelegate")
             self.delegate?.newTweetComposed!(newTweetViewController: self, didPostTweet: tweet)
+            self.newTweetTextField.resignFirstResponder()
             self.dismiss(animated: true, completion: nil)
         }, failure: { (error: Error) in
             print(error.localizedDescription)

@@ -52,6 +52,8 @@ class TweetReplyViewController: UIViewController {
         
         TwitterClient.sharedInstance?.postReply(tweetMessage: message, tweetInResponseTo: tweetInReplyTo, success: { (tweet:Tweet) in
             print("successfully replied to tweet: \(tweet.text)")
+            self.newTweetTextField.resignFirstResponder()
+            self.dismiss(animated: true, completion: nil)
         }, failure: { (error:Error) in
             print(error.localizedDescription)
         })
