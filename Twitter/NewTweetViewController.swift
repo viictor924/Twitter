@@ -31,7 +31,7 @@ class NewTweetViewController: UIViewController {
         //Make text field the first responder so keyboard appears
         newTweetTextField.becomeFirstResponder()
         
-        // Do any additional setup after loading the view.
+        customizeNavigationBar()
     }
     
     override func didReceiveMemoryWarning() {
@@ -63,6 +63,21 @@ class NewTweetViewController: UIViewController {
     
     @IBAction func onCancelButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    // =============================================================
+    // =============== Cosmetic Methods ============================
+    fileprivate func customizeNavigationBar(){
+        
+        self.navigationItem.title = "New tweet"
+        if let navigationBar = navigationController?.navigationBar {
+            
+            //Change the color of the Bar button fonts
+            navigationBar.tintColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            
+            navigationBar.titleTextAttributes = [
+                NSFontAttributeName : UIFont.boldSystemFont(ofSize: 22),
+                NSForegroundColorAttributeName : UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),]
+        }
     }
     // =============================================================
     

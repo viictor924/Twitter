@@ -102,7 +102,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="k74-Ak-mL1">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="K0O-dc-kdy">
+                        <barButtonItem key="leftBarButtonItem" title="Sign Out" id="K0O-dc-kdy">
                             <connections>
                                 <action selector="onLogoutButton:" destination="LX6-cx-G0P" id="ztX-hA-A6z"/>
                             </connections>
@@ -578,6 +578,6 @@
         <image name="retweet-1" width="75" height="72"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="a2c-90-gE8"/>
+        <segue reference="0ql-E1-byj"/>
     </inferredMetricsTieBreakers>
 </document>

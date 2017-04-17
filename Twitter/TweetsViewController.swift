@@ -113,12 +113,6 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
             //Change the color of the Bar button fonts
             navigationBar.tintColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             
-            //Change the color of the Navigation Bar Background
-            navigationBar.backgroundColor = UIColor(red:0.01, green:0.43, blue:0.79, alpha:1.0)
-            
-            //Make the navigationBar be opaque
-            // navigationBar.isTranslucent = false
-            
             navigationBar.titleTextAttributes = [
                 NSFontAttributeName : UIFont.boldSystemFont(ofSize: 22),
                 NSForegroundColorAttributeName : UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),
