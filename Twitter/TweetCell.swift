@@ -28,7 +28,6 @@ class TweetCell: UITableViewCell {
                 //data from tweet model
                 tweetTextLabel.text = tweet.text as String?
                 timestampLabel.text = tweet.formattedDate
-                replyCountLabel.text = "\(tweet.replyCount)"
                 retweetCountLabel.text = "\(tweet.retweetCount)"
                 favoriteCountLabel.text = "\(tweet.favoritesCount)"
                 

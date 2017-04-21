@@ -13,8 +13,12 @@ class User: NSObject {
     var name: String?
     var screenName: String?
     var profileURL: URL?
+    var profileBannerURL: URL?
     var tagline: String?
     var dictionary: NSDictionary?
+    var tweetCount: Int = 0
+    var followersCount: Int = 0
+    var followingCount: Int = 0
     
     init(dictionary:NSDictionary){
         self.dictionary = dictionary
@@ -22,12 +26,29 @@ class User: NSObject {
         name = dictionary["name"] as? String
         screenName = "@" + (dictionary["screen_name"] as? String)!
         
+        print(dictionary)
+        
         let profileURLString = dictionary["profile_image_url_https"] as? String
         if let profileURLString = profileURLString{
             profileURL = URL(string: profileURLString)
         }
-        tagline = dictionary["description"] as? String
+        
+        //"profile_banner_url" = "https://pbs.twimg.com/profile_banners/15944436/1468953558";
+        let profileBannerURLString = dictionary["profile_banner_url"] as? String
+        if let profileBannerURLString = profileBannerURLString{
+            profileBannerURL = URL(string: profileBannerURLString)
         }
+        // Example: "statuses_count" = 379579
+        tweetCount = (dictionary["statuses_count"] as? Int) ?? 0
+       
+        // Example: "followers_count" = 806891;
+        followersCount = (dictionary["followers_count"] as? Int) ?? 0
+        
+        // Example: "friends_count" = 46;
+        followingCount = (dictionary["friends_count"] as? Int) ?? 0
+        
+        tagline = dictionary["description"] as? String
+    }
     
     static let userDidLogoutNotification = "UserDidLogout"
     static var _currentUser: User?

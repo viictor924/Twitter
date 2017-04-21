@@ -64,7 +64,8 @@ class Tweet: NSObject {
             timeStamp = formatter.date(from: timeStampStr)
         }
         
-        print(dictionary)
+        //print(dictionary)
+        //print(dictionary["user"])
         
         // Example: "reply_count" = 3152;
         replyCount = (dictionary["reply_count"] as? Int) ?? 0

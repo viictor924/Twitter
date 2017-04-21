@@ -60,12 +60,12 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         TwitterClient.sharedInstance?.logOut()
         User.currentUser = nil
     }
+    
     // =============================================================
     // ============ Table View Methods =============================
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
-        
         return cell
     }
     
@@ -153,6 +153,17 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
             //let tweetDetailVC = navVC.topViewController as! TweetDetailViewController
             let tweetDetailVC = segue.destination as! TweetDetailViewController
             tweetDetailVC.tweet = tweet
+        }
+        else if segue.identifier == "profilePageSegue"{
+            print("I'm inside the profilePageSegue")
+            let tweetCell = (sender as AnyObject).superview??.superview as! TweetCell
+            let tweetIndexPath = tableView.indexPath(for: tweetCell)
+            let tweet = tweets[(tweetIndexPath?.row)!]
+            
+            //let navVC = segue.destination as! UINavigationController
+            //let profilePageVC = navVC.topViewController as! ProfilePageViewController
+            let profilePageVC = segue.destination as! ProfilePageViewController
+            profilePageVC.tweet = tweet
         }
     }
     // =============================================================
