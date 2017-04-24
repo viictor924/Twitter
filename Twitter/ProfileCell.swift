@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFNetworking
 
 class ProfileCell: UITableViewCell {
 
@@ -21,13 +22,55 @@ class ProfileCell: UITableViewCell {
     var user: User!{
         didSet{
             if let profileBannerURL = user.profileBannerURL{
-                print("Successfully downloaded profile picture")
+                
                 coverPhotoImageView.setImageWith(profileBannerURL)
-            } else { print("Failure: profile picture") }
+                /*
+                let imageRequest = URLRequest(url: profileBannerURL)
+                
+                coverPhotoImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
+                    
+                    print("Successfully downloaded banner picture")
+                    // imageResponse will be nil if the image is cached
+                    if imageResponse != nil {
+                      print("fading in image")
+                        self.coverPhotoImageView.alpha = 0.0
+                        self.coverPhotoImageView.image = image
+                        
+                        UIView.animate(withDuration: 0.3, animations: {
+                            self.coverPhotoImageView.alpha = 1.0
+                        })
+                    }
+                    
+                }, failure: { (imageRequest, imageResponse, error) in
+                    print("error downloading profile banner image")
+                })
+                */
+            } else { print("bannerURL is nil") }
+            
             if let profileURL = user.profileURL{
-           print("Successfully downloaded banner picture")
+                
                 profilePictureImageView.setImageWith(profileURL)
-            } else { print("Failure: banner picture") }
+            /*    let imageRequest = URLRequest(url: profileURL)
+                
+                profilePictureImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
+                    print("Successfully downloaded banner picture")
+                    
+                    // imageResponse will be nil if the image is cached
+                    if imageResponse != nil {
+                        print("fading in image")
+                        self.profilePictureImageView.alpha = 0.0
+                        self.profilePictureImageView.image = image
+                        
+                        UIView.animate(withDuration: 0.6, animations: {
+                            self.profilePictureImageView.alpha = 1.0
+                        })
+                    }
+                    
+                }, failure: { (imageRequest, imageResponse, error) in
+                    print("error downloading profile banner image")
+                }) */
+                
+            } else { print("profileURL is nil") }
             fullNameLabel.text = user.name
             screenNameLabel.text = user.screenName
             tweetCountLabel.text = "\(user.tweetCount)"

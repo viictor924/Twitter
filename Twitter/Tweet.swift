@@ -11,17 +11,24 @@ import UIKit
 class Tweet: NSObject {
 
     var text: String?
-    var timeStamp: Date?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
-    var replyCount: Int = 0
-    var user: User?
+    var timeStamp: Date?
+    var tweetID: String?
     
-    var timeStampString: String?
+    var user: User?
+ 
+    var fullName: String?
     var screenName: String?
     var profilePictureUrl: URL?
-    var fullName: String?
-    var tweetID: String?
+
+    var didUserRetweet: Bool?
+    var didUserFavorite: Bool?
+    
+    var retweetUserName: String?
+    var retweetUserScreenName: String?
+    
+    var retweetData: Tweet?
     
     var formattedDate: String {
         if let timeStamp = timeStamp {
@@ -50,11 +57,16 @@ class Tweet: NSObject {
     init(dictionary: NSDictionary){
         user = User(dictionary: dictionary["user"] as! NSDictionary)
         
+        //print(dictionary)
+        
         // Example: text = "2nd tweet";
         text = dictionary["text"] as? String
         
-        // Example: id_str = "853699324584247296"
-        tweetID = dictionary["id_str"] as? String
+        // Example: "retweet_count" = 6353;
+        retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
+        
+        // Example: "favorite_count" = 278;
+        favoritesCount = (dictionary["favorite_count"] as? Int) ?? 0
         
         // Example: "Tue Aug 28 21:08:15 +0000 2012"
         let timeStampStr = dictionary["created_at"] as? String
@@ -64,18 +76,38 @@ class Tweet: NSObject {
             timeStamp = formatter.date(from: timeStampStr)
         }
         
-        //print(dictionary)
-        //print(dictionary["user"])
-        
-        // Example: "reply_count" = 3152;
-        replyCount = (dictionary["reply_count"] as? Int) ?? 0
-        
-        // Example: "retweet_count" = 6353;
-        retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
-        
-        // Example: "favorite_count" = 278;
-        favoritesCount = (dictionary["favorite_count"] as? Int) ?? 0
+        // Example: id_str = "853699324584247296"
+        tweetID = dictionary["id_str"] as? String
 
+        didUserRetweet = (dictionary["retweeted"] as? Bool?) ?? false
+        didUserFavorite = (dictionary["favorited"] as? Bool?) ?? false
+        
+        if let retweetedStatus = dictionary["retweeted_status"] as? NSDictionary {
+            retweetData = Tweet(dictionary: retweetedStatus)
+        }
+        
+
+       /* if let retweetStatusDictionary = retweetStatusDictionary{
+            print("extracting retweetStatusDictionary")
+            let userDictionary = retweetStatusDictionary["user"] as? NSDictionary
+            fullName = userDictionary?["user"] as? String
+            screenName = userDictionary?["user"] as? String
+            let userImageUrlString = userDictionary?["profile_image_url_https"] as? String
+            profilePictureUrl = URL(string: userImageUrlString!)
+            
+            let retweetUserDictionary = dictionary["user"] as! NSDictionary
+            retweetUserName = retweetUserDictionary["name"] as? String
+            retweetUserScreenName = retweetUserDictionary["screen_name"] as? String
+        } else {
+            print("retweetStatusDictionary is nil")
+            let user = dictionary["user"] as? NSDictionary
+            if let user = user{
+                fullName = user["name"] as? String
+                screenName = user["screen_name"] as? String
+                let userImageUrlString = user["profile_image_url_https"] as? String
+                profilePictureUrl = URL(string: userImageUrlString!)
+            }
+        } */
     }
 
     class func tweetsWithArray(dictionaries: [NSDictionary]) -> [Tweet]{

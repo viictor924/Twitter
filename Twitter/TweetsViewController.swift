@@ -22,14 +22,14 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         
         tableView.dataSource = self
         tableView.delegate = self
-    
+        
         configureRowHeight()
-       /*
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let navVC = storyboard.instantiateViewController(withIdentifier: "NewTweetViewController") as! UINavigationController
-        let newTweetVC = navVC.topViewController as! NewTweetViewController
-        newTweetVC.delegate = self
-            */
+        /*
+         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+         let navVC = storyboard.instantiateViewController(withIdentifier: "NewTweetViewController") as! UINavigationController
+         let newTweetVC = navVC.topViewController as! NewTweetViewController
+         newTweetVC.delegate = self
+         */
         addRefreshControl()
         requestHomeTimeline()
         
@@ -132,8 +132,8 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
      }
      */
     
-
-
+    
+    
     // =============== Prepare for Segue ============================
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         
@@ -168,12 +168,14 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
     }
     // =============================================================
 }
-    // =============== Delegate Methods ============================
-    extension TweetsViewController: newTweetControllerDelegate {
-    func newTweetComposed(newTweetViewController: NewTweetViewController, didPostTweet: Tweet) {
+// =============== Delegate Methods ============================
+// MARK: - NewTweetControllerDelegate
+extension TweetsViewController: newTweetControllerDelegate {
+    func newTweetComposed(newTweetViewController: NewTweetViewController, didPostTweet tweet: Tweet) {
         print("newTweetComposed delegate called on TweetsViewController")
-        tweets.insert(didPostTweet, at: 0)
+        tweets.insert(tweet, at: 0)
         tableView.reloadData()
     }
+   // func tweetReply
 }
-    // =============================================================
+// =============================================================

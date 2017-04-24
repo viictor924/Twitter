@@ -15,7 +15,8 @@ class User: NSObject {
     var profileURL: URL?
     var profileBannerURL: URL?
     var tagline: String?
-    var dictionary: NSDictionary?
+    
+   var dictionary: NSDictionary?
     var tweetCount: Int = 0
     var followersCount: Int = 0
     var followingCount: Int = 0

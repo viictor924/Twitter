@@ -24,7 +24,7 @@ class ProfilePageViewController: UIViewController, UITableViewDataSource, UITabl
         customizeNavigationBar()
         addRefreshControl()
         
-        requestUserTimeline()
+        
       //  requestCurrentAccount()
         
         if tweet != nil{

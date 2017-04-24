@@ -98,14 +98,21 @@ class MentionsViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.insertSubview(refreshControl, at: 0)
     }
     // =============================================================
-    /*
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "MentionToProfileSegue"{
+            print("I'm inside the MentionToProfileSegue")
+            let tweetCell = (sender as AnyObject).superview??.superview as! TweetCell
+            let tweetIndexPath = tableView.indexPath(for: tweetCell)
+            let tweet = tweets[(tweetIndexPath?.row)!]
+            
+            let profilePageVC = segue.destination as! ProfilePageViewController
+            profilePageVC.tweet = tweet
+        }
     }
-    */
-
 }
