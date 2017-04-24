@@ -1,64 +1,40 @@
 //
-//  ProfilePageViewController.swift
+//  MentionsViewController.swift
 //  Twitter
 //
-//  Created by victor rodriguez on 4/18/17.
+//  Created by victor rodriguez on 4/21/17.
 //  Copyright © 2017 Victor Rodriguez. All rights reserved.
 //
 
 import UIKit
 
-class ProfilePageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MentionsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-
-    var tweet: Tweet!
+    
     var tweets: [Tweet]!
-    var user = User.currentUser!
     var refreshControl: UIRefreshControl?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureTable()
-        customizeNavigationBar()
-        addRefreshControl()
+        requestMentionsTimeline()
         
-        requestUserTimeline()
-      //  requestCurrentAccount()
-        
-        if tweet != nil{
-            user = tweet.user!
-        }
-        requestUserTimeline()
-        //requestCurrentAccount()
-        
-        print("I'm inside ViewDidLoad of profilePage: \(user.name)")
-        
+        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    // ============ API Call Methods =============================
-    func requestCurrentAccount() -> Void{
-        print("Inside requestCurrentAccount()")
-
-        TwitterClient.sharedInstance?.currentAccount(success: { (user) in
-            self.user = user
-            self.tableView.reloadData()
-        }, failure: { (error: Error) in
-            print(error.localizedDescription)
-        })
-    }
-    
-    func requestUserTimeline() -> Void{
-        print("Inside requestUserTimeline()")
-        TwitterClient.sharedInstance?.userTimeline(user: user,success: { (tweets:[Tweet]) in
+ 
+    // ============ API Methods ====================================
+    func requestMentionsTimeline() -> Void{
+        TwitterClient.sharedInstance?.mentionsTimeline(success: { (tweets:[Tweet]) in
             self.tweets = tweets
             self.tableView.reloadData()
+            
         }, failure: { (error: NSError) in
             print(error.localizedDescription)
         })
@@ -68,43 +44,28 @@ class ProfilePageViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweets?.count ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath) as! ProfileCell
-            print("Setting up user info on profile page")
-            //cell.user = tweet.user
-            cell.user = user
-            return cell
-        }
-        else {
+
             let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
             //print("setting up tweetCells in profile page")
-            cell.tweet = tweets[indexPath.row-1]
+            cell.tweet = tweets[indexPath.row]
             return cell
-        }
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
+        
     }
     fileprivate func configureTable() {
-        tableView.dataSource = self
         tableView.delegate = self
+        tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
     }
     // =============================================================
     // =============== Cosmetic Methods ============================
     func customizeNavigationBar(){
+
+        self.navigationItem.title = "Mentions"
         
-      /*  if let userName = tweet.user?.name{
-           self.navigationItem.title = "\(userName)"
-        } */
-      /*  if let userName = user.name{
-            self.navigationItem.title = "\(userName)"
-        } */
-        
-       // self.navigationItem.title = "\(tweet.user?.name)"
+        // self.navigationItem.title = "\(tweet.user?.name)"
         if let navigationBar = navigationController?.navigationBar {
             
             //Change the color of the Bar button fonts
@@ -123,10 +84,9 @@ class ProfilePageViewController: UIViewController, UITableViewDataSource, UITabl
     // Hides the RefreshControl
     func refresh(sender:AnyObject)
     {
-        requestUserTimeline()
+        requestMentionsTimeline()
         print("end refreshing")
         self.refreshControl?.endRefreshing()
-        tableView.reloadData()  
     }
     
     fileprivate func addRefreshControl() -> Void{
@@ -138,8 +98,6 @@ class ProfilePageViewController: UIViewController, UITableViewDataSource, UITabl
         tableView.insertSubview(refreshControl, at: 0)
     }
     // =============================================================
-    
-    
     /*
     // MARK: - Navigation
 

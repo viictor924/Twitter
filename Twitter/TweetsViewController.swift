@@ -36,7 +36,7 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
         //Customize the Navigation Bar
         customizeNavigationBar()
     }
-    
+    // ============ API Methods =============================
     func requestHomeTimeline() -> Void{
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets:[Tweet]) in
             self.tweets = tweets
@@ -47,7 +47,7 @@ class TweetsViewController: UIViewController,UITableViewDelegate, UITableViewDat
             print(error.localizedDescription)
         })
     }
-    
+    // ======================================================
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -19,6 +19,7 @@ let twitterRequestTokenPath = "oauth/request_token"
 let twitterAuthUrl = "https://api.twitter.com/oauth/authorize"
 let twitterAccessTokenPath = "/oauth/access_token"
 let twitterHomeTimelinePath = "1.1/statuses/home_timeline.json"
+let twitterMentionTimelinePath = "1.1/statuses/mentions_timeline.json"
 let twitterUserTimelinePath = "1.1/statuses/user_timeline.json"
 let twitterVerifyCredentials = "1.1/account/verify_credentials.json"
 let twitterOAuthCallback = "twitterdemo://oauth"
@@ -31,6 +32,9 @@ let twitterPostRetweetPath = "1.1/statuses/retweet/" //:id.json
 
 // Post tweet
 let twitterPostTweetPath = "1.1/statuses/update.json"
+
+// Show user
+let twitterShowUserPath = "1.1/users/show.json"
 
 
 class TwitterClient: BDBOAuth1SessionManager {
@@ -162,6 +166,25 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
         
     }
+    
+    func showUser(user:User ,success: @escaping ([Tweet]) -> (), failure: @escaping (NSError) -> ()){
+        let param = ["screen_name":user.screenName!]
+        get(twitterUserTimelinePath, parameters: param, progress: { (nil) in
+            print("Requesting \(user.screenName)'s tweets: Progress...")
+        }, success: { (task: URLSessionDataTask, response: Any?) in
+            print("requested \(user.screenName)'s tweets from Twitter server")
+            let dictionaries = response as! [NSDictionary]
+            
+            // Take the array of dicts and convert it to a array of Tweet objects.
+            // Because tweetsWithArray is class method, I can use the method without an istance.
+            let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+            success(tweets)
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error as NSError)
+            print("Error occurred while retrieving tweets, \(error)")
+        })
+    }
  
     func userTimeline(user:User ,success: @escaping ([Tweet]) -> (), failure: @escaping (NSError) -> ()){
         let param = ["screen_name":user.screenName!]
@@ -184,12 +207,28 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func mentionsTimeline(success: @escaping ([Tweet]) -> (), failure: @escaping (NSError) -> ()){
+        // home timeline for the user that is currently logged in
+        get(twitterMentionTimelinePath, parameters: nil, progress: { (nil) in
+            print("Requesting mentionsTimeline: Progress...")
+        }, success: { (task:URLSessionDataTask, response: Any?) in
+            print("Success: Mentions timeline")
+            let dictionaries = response as! [NSDictionary]
+            
+            // Take the array of dicts and convert it to a array of Tweet objects.
+            // Because tweetsWithArray is class method, I can use the method without an istance.
+            let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+            success(tweets)
+        }) { (task:URLSessionDataTask?, error:Error) in
+            print("Error occurred while retrieving Mentions, \(error)")
+        }
+    }
     
     func homeTimeline(success: @escaping ([Tweet]) -> (), failure: @escaping (NSError) -> ()){
         
-        // logged in user's home timeline tweets
+        // home timeline for the user that is currently logged in
         get(twitterHomeTimelinePath, parameters: nil, progress: { (nil) in
-            print("Requesting tweets: Progress...")
+            print("Requesting homeTimeline: Progress...")
         }, success: { (task: URLSessionDataTask, response: Any?) in
             print("requested tweets from Twitter server")
             let dictionaries = response as! [NSDictionary]
@@ -206,21 +245,12 @@ class TwitterClient: BDBOAuth1SessionManager {
     }
     
     func currentAccount(success: @escaping (User) -> (), failure: @escaping (NSError) ->()){
-        // Access users account info
+        // Access the account of info for the user that is currently logged in
         get(twitterVerifyCredentials, parameters: nil, progress: { (nil) in
             print("Requesting user info from current account: Progress...")
         }, success: { (task: URLSessionDataTask, response: Any?) in
             let user = User(dictionary: response as! NSDictionary)
-            
             success(user)
-            
-            // print("account: \(response)")
-        /*    print("Name: \(user.name!)")
-            print("Screenname: \(user.screenName!)")
-            print("profile url: \(user.profileURL!)")
-            print("cover image url: \(user.profileBannerURL!)")
-            print("description: \(user.tagline!)") */
-            
         }, failure: { (task: URLSessionDataTask?, error: Error?) in
             print("Error occured retrieving user Twitter acount information, \(error)")
             failure(error as! NSError)

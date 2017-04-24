@@ -12,12 +12,11 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
-  //  fileprivate var tweetsViewController: UIViewController!
-  //  fileprivate var profilePageViewController: UIViewController!
     fileprivate var tweetsNavigationController: UINavigationController!
     fileprivate var profileNavigationController: UINavigationController!
+    fileprivate var mentionsNavigationController: UINavigationController!
     
-    var menuLabels = ["Profile", "Timeline", "Moments"]
+    var menuLabels = ["Profile", "Timeline", "Mentions"]
     
     var viewControllers: [UIViewController] = []
     var containerViewController: ContainerViewController!
@@ -27,17 +26,18 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableView.dataSource = self
         tableView.delegate = self
+        configureRowHeight()
         
+        print("ViewDidLoad: MenuViewController")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        
-        
-       // tweetsViewController = storyboard.instantiateViewController(withIdentifier: "TweetsViewController")
-        //profilePageViewController = storyboard.instantiateViewController(withIdentifier: "ProfilePageViewController")
         profileNavigationController = storyboard.instantiateViewController(withIdentifier: "ProfileNavigationController") as! UINavigationController
         tweetsNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController") as! UINavigationController
+        mentionsNavigationController = storyboard.instantiateViewController(withIdentifier: "MentionsNavigationController") as! UINavigationController
+        
         viewControllers.append(profileNavigationController)
         viewControllers.append(tweetsNavigationController)
+        viewControllers.append(mentionsNavigationController)
         
         containerViewController?.contentViewController = tweetsNavigationController
     }
@@ -50,11 +50,14 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return viewControllers.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        if indexPath.row == 0{
+            
+        }
         containerViewController.contentViewController = viewControllers[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
     }

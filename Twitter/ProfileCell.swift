@@ -21,13 +21,13 @@ class ProfileCell: UITableViewCell {
     var user: User!{
         didSet{
             if let profileBannerURL = user.profileBannerURL{
-            //    print("coverPhotoURL = \(profileBannerURL)")
+                print("Successfully downloaded profile picture")
                 coverPhotoImageView.setImageWith(profileBannerURL)
-            }
+            } else { print("Failure: profile picture") }
             if let profileURL = user.profileURL{
-           //     print("profilePhotoURL = \(profileURL)")
+           print("Successfully downloaded banner picture")
                 profilePictureImageView.setImageWith(profileURL)
-            }
+            } else { print("Failure: banner picture") }
             fullNameLabel.text = user.name
             screenNameLabel.text = user.screenName
             tweetCountLabel.text = "\(user.tweetCount)"
