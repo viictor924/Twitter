@@ -122,12 +122,6 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QRA-ni-Lfj">
-                                                    <rect key="frame" x="5" y="31" width="50" height="50"/>
-                                                    <state key="normal" title="Button">
-                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tVD-t7-Qoh">
                                                     <rect key="frame" x="5" y="31" width="50" height="50"/>
                                                     <constraints>
@@ -135,6 +129,15 @@
                                                         <constraint firstAttribute="width" constant="50" id="vc4-jm-QTm"/>
                                                     </constraints>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QRA-ni-Lfj">
+                                                    <rect key="frame" x="5" y="31" width="50" height="50"/>
+                                                    <state key="normal" title="Button">
+                                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="rf2-Zm-mwP" kind="show" id="vif-SE-UHZ"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="QRA-ni-Lfj" firstAttribute="width" secondItem="tVD-t7-Qoh" secondAttribute="width" id="1yu-Gk-Gaa"/>
@@ -1351,6 +1354,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="hfe-Gy-JAO"/>
         <segue reference="0ql-E1-byj"/>
-        <segue reference="bb6-YO-frf"/>
+        <segue reference="vif-SE-UHZ"/>
     </inferredMetricsTieBreakers>
 </document>
